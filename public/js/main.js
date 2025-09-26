@@ -57,6 +57,7 @@ function cerca_nomi() {
         .then(resp=>{
             if (resp.header=="OK") {
                 $("#div_wait").hide(120);
+                html=""
                 if (resp.info.length>0) {
                   sind="Non specificato";
                   colo_sind="secondary"
@@ -65,15 +66,20 @@ function cerca_nomi() {
                   if (resp.info[0].sindacato=="1") {sind="Fillea CGIL";colo_sind="danger";}
                   if (resp.info[0].sindacato=="2") {sind="Filca CISL";colo_sind="success";}
                   if (resp.info[0].sindacato=="3") {sind="Feneal UIL";colo_sind="primary";}
-                  html=""
                   iscr=""
                   if (resp.info[0].sindacato!="0" && resp.info[0].sindacato!=" " && resp.info[0].sindacato!="") iscr="Iscritto "
                   html+=
                     `<div class="alert alert-`+colo_sind+`" role="alert">
                         <b>`+nome+`</b> risulti `+iscr+sind+`
                     </div>`
-                  $("#div_resp").html(html)
+                 
+                } else {
+                  html+=
+                    `<div class="alert alert-secondary" role="alert">
+                        <b>`+nome+`</b> risulti non presente nei nostri archivi
+                    </div>`                
                 }
+                $("#div_resp").html(html)
                
             }
             else {
